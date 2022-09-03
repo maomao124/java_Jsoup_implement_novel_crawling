@@ -158,18 +158,24 @@ public class Download
         }
         for (Catalogue catalogue : list)
         {
-
-            System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
-            Content content = ContentService.getContent(catalogue.getHref());
-            File file = new File("./" + book.getName() + "/" + content.getTitle() + ".txt");
-            FileWriter fileWriter = new FileWriter(file);
-            String s = content.getContent();
-            size = size + s.length();
-            fileWriter.write(s);
-            fileWriter.flush();
-            fileWriter.close();
-            //随机休眠
-            sleep();
+            try
+            {
+                System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
+                Content content = ContentService.getContent(catalogue.getHref());
+                File file = new File("./" + book.getName() + "/" + content.getTitle() + ".txt");
+                FileWriter fileWriter = new FileWriter(file);
+                String s = content.getContent();
+                size = size + s.length();
+                fileWriter.write(s);
+                fileWriter.flush();
+                fileWriter.close();
+                //随机休眠
+                sleep();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         System.out.println("缓存完成，本书一共" + size + "字");
         Toolkit.getDefaultToolkit().beep();
@@ -209,18 +215,25 @@ public class Download
             {
                 continue;
             }
-            Catalogue catalogue = list.get(i);
-            System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
-            Content content = ContentService.getContent(catalogue.getHref());
-            File file = new File("./" + book.getName() + "/" + content.getTitle() + ".txt");
-            FileWriter fileWriter = new FileWriter(file);
-            String s = content.getContent();
-            size = size + s.length();
-            fileWriter.write(s);
-            fileWriter.flush();
-            fileWriter.close();
-            //随机休眠
-            sleep();
+            try
+            {
+                Catalogue catalogue = list.get(i);
+                System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
+                Content content = ContentService.getContent(catalogue.getHref());
+                File file = new File("./" + book.getName() + "/" + content.getTitle() + ".txt");
+                FileWriter fileWriter = new FileWriter(file);
+                String s = content.getContent();
+                size = size + s.length();
+                fileWriter.write(s);
+                fileWriter.flush();
+                fileWriter.close();
+                //随机休眠
+                sleep();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("缓存完成，本书一共" + size + "字");
@@ -261,19 +274,26 @@ public class Download
             {
                 continue;
             }
-            Catalogue catalogue = list.get(i);
-            System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
-            Content content = ContentService.getContent(catalogue.getHref());
-            File file = new File("./" + book.getName() + "/json/" + content.getTitle() + ".json");
-            FileWriter fileWriter = new FileWriter(file);
-            String s = content.getContent();
-            size = size + s.length();
-            String jsonString = JSON.toJSONString(content);
-            fileWriter.write(jsonString);
-            fileWriter.flush();
-            fileWriter.close();
-            //随机休眠
-            sleep();
+            try
+            {
+                Catalogue catalogue = list.get(i);
+                System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
+                Content content = ContentService.getContent(catalogue.getHref());
+                File file = new File("./" + book.getName() + "/json/" + content.getTitle() + ".json");
+                FileWriter fileWriter = new FileWriter(file);
+                String s = content.getContent();
+                size = size + s.length();
+                String jsonString = JSON.toJSONString(content);
+                fileWriter.write(jsonString);
+                fileWriter.flush();
+                fileWriter.close();
+                //随机休眠
+                sleep();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("缓存完成，本书一共" + size + "字");
