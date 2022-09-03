@@ -1,5 +1,6 @@
 package mao.service;
 
+import com.alibaba.fastjson.JSON;
 import mao.entity.Book;
 import mao.entity.Catalogue;
 import mao.entity.Content;
@@ -212,9 +213,76 @@ public class Download
         Toolkit.getDefaultToolkit().beep();
     }
 
+    /**
+     * 缓存到文件，分散模式，一章一个文件，从startChapter章节开始，json格式
+     *
+     * @param urlString    url字符串
+     * @param startChapter 开始章节
+     * @throws IOException          IOException
+     * @throws InterruptedException 中断异常
+     */
+    public static void toJsonFileDispersion(String urlString, int startChapter) throws IOException, InterruptedException
+    {
+        //文字数量
+        long size = 0;
+        //获取目录和书名
+        Book book = CatalogueService.getCatalogue(urlString);
+        System.out.println("书名：" + book.getName());
+        List<Catalogue> list = book.getList();
+        System.out.println("一共" + list.size() + "章");
+        System.out.println("开始获取正文");
+        File file1 = new File("./" + book.getName() + "/json/");
+        if (!file1.exists())
+        {
+            boolean b = file1.mkdirs();
+            if (!b)
+            {
+                System.out.println("目录创建失败！");
+                return;
+            }
+        }
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (i < startChapter - 1)
+            {
+                continue;
+            }
+            Catalogue catalogue = list.get(i);
+            System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
+            Content content = ContentService.getContent(catalogue.getHref());
+            File file = new File("./" + book.getName() + "/json/" + content.getTitle() + ".json");
+            FileWriter fileWriter = new FileWriter(file);
+            String s = content.getContent();
+            size = size + s.length();
+            String jsonString = JSON.toJSONString(content);
+            fileWriter.write(jsonString);
+            fileWriter.flush();
+            fileWriter.close();
+            //随机休眠
+            Thread.sleep(getIntRandom(200, 1000));
+        }
+
+        System.out.println("缓存完成，本书一共" + size + "字");
+        Toolkit.getDefaultToolkit().beep();
+    }
+
+
+    /**
+     * 缓存到文件，分散模式，一章一个文件，json格式
+     *
+     * @param urlString url字符串
+     * @throws IOException          IOException
+     * @throws InterruptedException 中断异常
+     */
+    public static void toJsonFileDispersion(String urlString) throws IOException, InterruptedException
+    {
+        toJsonFileDispersion(urlString, 1);
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException
     {
         //toFile("http://www.biqu5200.net/52_52542/", 494);
-        toFileDispersion("http://www.biqu5200.net/52_52542/", 211);
+        //toFileDispersion("http://www.biqu5200.net/52_52542/", 211);
+        toJsonFileDispersion("http://www.biqu5200.net/52_52542/");
     }
 }
