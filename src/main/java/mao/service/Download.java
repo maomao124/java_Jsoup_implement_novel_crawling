@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import mao.entity.Book;
 import mao.entity.Catalogue;
 import mao.entity.Content;
+import mao.entity.SpeedProp;
 
 import java.awt.*;
 import java.io.File;
@@ -44,7 +45,7 @@ public class Download
 
     private static void sleep() throws InterruptedException
     {
-        Thread.sleep(getIntRandom(200, 1000));
+        Thread.sleep(getIntRandom(SpeedProp.getMinSleepTime(), SpeedProp.getMaxSleepTime()));
     }
 
 
@@ -297,6 +298,6 @@ public class Download
         //toFile("http://www.biqu5200.net/52_52542/", 494);
         //toFileDispersion("http://www.biqu5200.net/52_52542/", 211);
         //toJsonFileDispersion("http://www.biqu5200.net/52_52542/",128);
-        toJsonFileDispersion("http://www.biqu5200.net/2_2157/", 128);
+        toJsonFileDispersion("http://www.biqu5200.net/2_2157/", 257);
     }
 }
