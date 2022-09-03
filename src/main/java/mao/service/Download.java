@@ -4,6 +4,7 @@ import mao.entity.Book;
 import mao.entity.Catalogue;
 import mao.entity.Content;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -67,6 +68,7 @@ public class Download
         }
         fileWriter.close();
         System.out.println("缓存完成，本书一共" + size + "字");
+        Toolkit.getDefaultToolkit().beep();
     }
 
     /**
@@ -86,27 +88,40 @@ public class Download
         List<Catalogue> list = book.getList();
         System.out.println("一共" + list.size() + "章");
         System.out.println("开始获取正文");
-        File file = new File(book.getName() + "txt");
-        FileWriter fileWriter = new FileWriter(file);
+        File file1 = new File("./" + book.getName() + "/");
+        if (!file1.exists())
+        {
+            boolean b = file1.mkdirs();
+            if (!b)
+            {
+                System.out.println("目录创建失败！");
+                return;
+            }
+        }
         for (Catalogue catalogue : list)
         {
-            System.out.println("开始缓存：" + catalogue.getName());
+
+            System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
             Content content = ContentService.getContent(catalogue.getHref());
+            File file = new File("./" + book.getName() + "/" + content.getTitle() + ".txt");
+            FileWriter fileWriter = new FileWriter(file);
             String s = content.getContent();
             size = size + s.length();
             fileWriter.write(content.getTitle() + "\n\n");
             fileWriter.write(s);
             fileWriter.write("\n\n\n\n");
             fileWriter.flush();
+            fileWriter.close();
             //随机休眠
             Thread.sleep(getIntRandom(200, 1000));
         }
-        fileWriter.close();
         System.out.println("缓存完成，本书一共" + size + "字");
+        Toolkit.getDefaultToolkit().beep();
     }
 
     public static void main(String[] args) throws IOException, InterruptedException
     {
-        toFile("http://www.biqu5200.net/52_52542/");
+        //toFile("http://www.biqu5200.net/52_52542/");
+        toFileDispersion("http://www.biqu5200.net/52_52542/");
     }
 }
