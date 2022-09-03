@@ -283,6 +283,6 @@ public class Download
     {
         //toFile("http://www.biqu5200.net/52_52542/", 494);
         //toFileDispersion("http://www.biqu5200.net/52_52542/", 211);
-        toJsonFileDispersion("http://www.biqu5200.net/52_52542/");
+        toJsonFileDispersion("http://www.biqu5200.net/52_52542/",128);
     }
 }
