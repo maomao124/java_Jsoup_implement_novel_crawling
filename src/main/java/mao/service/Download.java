@@ -107,9 +107,7 @@ public class Download
             FileWriter fileWriter = new FileWriter(file);
             String s = content.getContent();
             size = size + s.length();
-            fileWriter.write(content.getTitle() + "\n\n");
             fileWriter.write(s);
-            fileWriter.write("\n\n\n\n");
             fileWriter.flush();
             fileWriter.close();
             //随机休眠
