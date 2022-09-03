@@ -319,6 +319,7 @@ public class Download
         //toFileDispersion("http://www.biqu5200.net/52_52542/", 211);
         //toJsonFileDispersion("http://www.biqu5200.net/52_52542/",128);
         //toJsonFileDispersion("http://www.biqu5200.net/2_2157/", 257);
-        toFileDispersion("http://www.biqu5200.net/8_8187/");
+        //toFileDispersion("http://www.biqu5200.net/8_8187/");
+        toFileDispersion("http://www.biqu5200.net/0_111/");
     }
 }
