@@ -26,7 +26,14 @@ import java.util.List;
 
 public class Download
 {
-    public static int getIntRandom(int min, int max)
+    /**
+     * 得到int随机数
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return int
+     */
+    private static int getIntRandom(int min, int max)
     {
         if (min > max)
         {
@@ -34,6 +41,12 @@ public class Download
         }
         return min + (int) (Math.random() * (max - min + 1));
     }
+
+    private static void sleep() throws InterruptedException
+    {
+        Thread.sleep(getIntRandom(200, 1000));
+    }
+
 
     /**
      * 缓存到文件
@@ -65,7 +78,7 @@ public class Download
             fileWriter.write("\n\n\n\n");
             fileWriter.flush();
             //随机休眠
-            Thread.sleep(getIntRandom(200, 1000));
+            sleep();
         }
         fileWriter.close();
         System.out.println("缓存完成，本书一共" + size + "字");
@@ -108,7 +121,7 @@ public class Download
             fileWriter.write("\n\n\n\n");
             fileWriter.flush();
             //随机休眠
-            Thread.sleep(getIntRandom(200, 1000));
+            sleep();
         }
         fileWriter.close();
         System.out.println("缓存完成，本书一共" + size + "字");
@@ -155,7 +168,7 @@ public class Download
             fileWriter.flush();
             fileWriter.close();
             //随机休眠
-            Thread.sleep(getIntRandom(200, 1000));
+            sleep();
         }
         System.out.println("缓存完成，本书一共" + size + "字");
         Toolkit.getDefaultToolkit().beep();
@@ -206,7 +219,7 @@ public class Download
             fileWriter.flush();
             fileWriter.close();
             //随机休眠
-            Thread.sleep(getIntRandom(200, 1000));
+            sleep();
         }
 
         System.out.println("缓存完成，本书一共" + size + "字");
@@ -259,7 +272,7 @@ public class Download
             fileWriter.flush();
             fileWriter.close();
             //随机休眠
-            Thread.sleep(getIntRandom(200, 1000));
+            sleep();
         }
 
         System.out.println("缓存完成，本书一共" + size + "字");
@@ -284,6 +297,6 @@ public class Download
         //toFile("http://www.biqu5200.net/52_52542/", 494);
         //toFileDispersion("http://www.biqu5200.net/52_52542/", 211);
         //toJsonFileDispersion("http://www.biqu5200.net/52_52542/",128);
-        toJsonFileDispersion("http://www.biqu5200.net/2_2157/",128);
+        toJsonFileDispersion("http://www.biqu5200.net/2_2157/", 128);
     }
 }
