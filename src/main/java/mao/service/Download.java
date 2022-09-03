@@ -33,7 +33,50 @@ public class Download
         return min + (int) (Math.random() * (max - min + 1));
     }
 
+    /**
+     * 缓存到文件
+     *
+     * @param urlString url字符串
+     * @throws IOException          IOException
+     * @throws InterruptedException 中断异常
+     */
     public static void toFile(String urlString) throws IOException, InterruptedException
+    {
+        //文字数量
+        long size = 0;
+        //获取目录和书名
+        Book book = CatalogueService.getCatalogue(urlString);
+        System.out.println("书名：" + book.getName());
+        List<Catalogue> list = book.getList();
+        System.out.println("一共" + list.size() + "章");
+        System.out.println("开始获取正文");
+        File file = new File(book.getName() + ".txt");
+        FileWriter fileWriter = new FileWriter(file);
+        for (Catalogue catalogue : list)
+        {
+            System.out.println("已缓存" + size + "字   " + "开始缓存：" + catalogue.getName());
+            Content content = ContentService.getContent(catalogue.getHref());
+            String s = content.getContent();
+            size = size + s.length();
+            fileWriter.write(content.getTitle() + "\n\n");
+            fileWriter.write(s);
+            fileWriter.write("\n\n\n\n");
+            fileWriter.flush();
+            //随机休眠
+            Thread.sleep(getIntRandom(200, 1000));
+        }
+        fileWriter.close();
+        System.out.println("缓存完成，本书一共" + size + "字");
+    }
+
+    /**
+     * 缓存到文件，分散模式，一章一个文件
+     *
+     * @param urlString url字符串
+     * @throws IOException          IOException
+     * @throws InterruptedException 中断异常
+     */
+    public static void toFileDispersion(String urlString) throws IOException, InterruptedException
     {
         //文字数量
         long size = 0;
@@ -57,7 +100,6 @@ public class Download
             fileWriter.flush();
             //随机休眠
             Thread.sleep(getIntRandom(200, 1000));
-
         }
         fileWriter.close();
         System.out.println("缓存完成，本书一共" + size + "字");
